@@ -1,5 +1,4 @@
-import { Server } from './server';
+import { Server } from "./server";
+import { SERVER_PORT } from "./config";
 
-
-const server = new Server();
-server.listen(4200);
+new Server().setPort(SERVER_PORT).listen();
