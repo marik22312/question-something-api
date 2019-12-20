@@ -23,8 +23,8 @@ export class Server {
 		return this;
 	}
 
-	public withRouter(router: Router): Server {
-		this.server.use(router);
+	public withRouter(path: string, router: Router): Server {
+		this.server.use(path, router);
 		return this;
 	}
 

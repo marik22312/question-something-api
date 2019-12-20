@@ -1,4 +1,7 @@
 import { Server } from "./server";
 import { SERVER_PORT } from "./config";
+import { questionsSomethingApiRoutes } from "./routes";
 
-new Server().setPort(SERVER_PORT).listen();
+const server = new Server().setPort(SERVER_PORT).withRouter('/api', questionsSomethingApiRoutes).listen();
+
+export default server;
