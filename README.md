@@ -2,6 +2,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 ![Prerequisite](https://img.shields.io/badge/node-%3E%3D8.0.0%20%3C11.0.0-blue.svg)
 [![Twitter: marik_sh](https://img.shields.io/twitter/follow/marik_sh.svg?style=social)](https://twitter.com/marik_sh)
+[![Build](https://api.travis-ci.org/marik22312/question-something-api.svg?branch=master)](#)
 
 > A Node.js + Express.js API for question-something-api
 
