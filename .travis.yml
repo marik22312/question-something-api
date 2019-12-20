@@ -24,4 +24,3 @@ deploy:
   secure: "$HEROKU_API_KEY"
  on:
   branch: master
-  condition: $MY_ENV = super_awesome
