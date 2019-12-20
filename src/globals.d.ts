@@ -1,5 +1,6 @@
 declare namespace NodeJS {
 	export interface ProcessEnv {
-	  PORT: string
+	  PORT: string;
+	  MONGODB_URI: string;
 	}
   }

@@ -9,6 +9,9 @@
 		"no-unused-variable": true,
 		"interface-name": false,
 		"object-literal-sort-keys": false,
-		"prettier": true
+		"prettier": true,
+		"indent": [true, "tabs", 2],
+		"ordered-imports": false,
+		"quotemark": false
     }
 }
