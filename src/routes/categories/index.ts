@@ -1,10 +1,9 @@
 import { Router, Request, Response } from 'express';
+import { getAllCategories } from '../../controllers/categories';
 
 const router = Router();
 
 router
-	.get('/', (req: Request, res: Response) => {
-		res.send('getAllCategories')
-	});
+	.get('/', getAllCategories);
 
 export const CategoriesRoutes = router;

@@ -1,10 +1,9 @@
 import { Router, Request, Response } from 'express';
+import { getAllQuestions } from '../../controllers/questions';
 
 const router = Router();
 
 router
-	.get('/', (req: Request, res: Response) => {
-		res.send('getAllQuestions')
-	});
+	.get('/', getAllQuestions);
 
 export const QuestionsRoutes = router;
