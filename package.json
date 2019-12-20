@@ -16,8 +16,8 @@
     "start": "npm run start:prod",
     "start:dev": "NODE_ENV=development node dist/index.js",
     "start:prod": "NODE_ENV=production node dist/index.js",
-	"build": "rm -rf dist && tsc -p tsconfig.json",
-	"test": "jest"
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "test": "jest"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -29,11 +29,15 @@
     "jest": "^24.9.0",
     "mongodb-memory-server": "^6.1.1",
     "supertest": "^4.0.2",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.20.1",
     "typescript": "^3.7.3"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
+    "@types/chance": "^1.0.7",
     "body-parser": "^1.19.0",
+    "chance": "^1.1.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.2",

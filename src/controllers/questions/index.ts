@@ -1,0 +1,1 @@
+export { getAllQuestions } from './getAllQuestions';
