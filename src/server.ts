@@ -1,6 +1,6 @@
-import Express, { Express as ExpressInstance, Request, Response, Router } from 'express';
+import Express, { Express as ExpressInstance, Router, RequestHandler } from 'express';
 import { Server as HttpServer } from 'http';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
+
 
 export class Server {
 	
@@ -38,5 +38,10 @@ export class Server {
 	public kill() {
 		this._httpServer?.close()
 		return;
+	}
+
+	public withStatic(apiPath: string, staticsPath: string) {
+		this.server.use(apiPath, Express.static(staticsPath))
+		return this;
 	}
 }
