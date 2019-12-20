@@ -16,7 +16,7 @@ export class Server {
 
 		this.withRoute();
 
-		this.server.listen(this._port, () => {
+		this.server.listen(process.env.PORT || this._port, () => {
 			console.log(`Server is listening on port ${this._port}`);
 		})
 		return;
