@@ -11,13 +11,13 @@ export const getAllQuestions = async (req: Request, res: Response) => {
 		no_of_dislikes: chance.integer({min: 0, max: 374}),
 		categories: [{
 			_id: '5dfd3f02acb89a860bd28578',
-			key: 'someCategory'
+			key: 'someCategory',
 		}],
 		difficulties: [{
 			_id: '5dfd3f02acb89a860bd28578',
-			key: 'hard'
+			key: 'hard',
 		}],
-	})
+	});
 
-	res.json([fakeQuestion(), fakeQuestion(), fakeQuestion()])
-}
+	res.json([fakeQuestion(), fakeQuestion(), fakeQuestion()]);
+};

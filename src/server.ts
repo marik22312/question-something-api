@@ -1,28 +1,28 @@
 import Express, { Express as ExpressInstance, Router, RequestHandler } from 'express';
 import { Server as HttpServer } from 'http';
 
-
 export class Server {
-	
+
 	private readonly server: ExpressInstance;
-	private _port: number;
-	private _httpServer: HttpServer | null;
+	private assignedPort: number;
+	private httpServer: HttpServer | null;
 
 	constructor() {
 		this.server = Express();
-		this._port = 4200;
-		this._httpServer = null;
+		this.assignedPort = 4200;
+		this.httpServer = null;
 	}
 
 	public listen(): Server {
-		this._httpServer = this.server.listen(this._port, () => {
-			console.log(`Server is listening on port ${this._port}`);
-		})
+		this.httpServer = this.server.listen(this.assignedPort, () => {
+			// tslint:disable-next-line: no-console
+			console.log(`Server is listening on port ${this.assignedPort}`);
+		});
 		return this;
 	}
 
 	public setPort(port: number): Server {
-		this._port = port || this._port;
+		this.assignedPort = port || this.assignedPort;
 		return this;
 	}
 
@@ -32,16 +32,16 @@ export class Server {
 	}
 
 	public get port() {
-		return this._port;
+		return this.assignedPort;
 	}
 
 	public kill() {
-		this._httpServer?.close()
+		this.httpServer?.close();
 		return;
 	}
 
 	public withStatic(apiPath: string, staticsPath: string) {
-		this.server.use(apiPath, Express.static(staticsPath))
+		this.server.use(apiPath, Express.static(staticsPath));
 		return this;
 	}
 }
