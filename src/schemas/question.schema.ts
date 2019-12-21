@@ -26,9 +26,11 @@ export const QuestionSchema: Schema = new Schema({
 	categories: {
 		type: [Schema.Types.ObjectId],
 		ref: 'category',
+		default: [],
 	},
 	difficulties: {
 		type: [Schema.Types.ObjectId],
 		ref: 'difficulty',
+		default: [],
 	},
 });

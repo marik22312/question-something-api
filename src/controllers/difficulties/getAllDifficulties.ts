@@ -1,13 +1,9 @@
 import { Request, Response } from "express";
-import Chance from 'chance';
-
-const chance = new Chance();
+import { DifficultyModel } from '../../models';
 
 export const getAllDifficulties = async (req: Request, res: Response) => {
-	const fakeDifficulty = () => ({
-			_id: chance.guid(),
-			key: chance.string()
-		})
 
-	res.json([fakeDifficulty(), fakeDifficulty(), fakeDifficulty()])
-}
+	const difficulties = await DifficultyModel.find().exec();
+
+	res.json(difficulties);
+};

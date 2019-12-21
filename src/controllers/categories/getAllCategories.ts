@@ -1,13 +1,7 @@
 import { Request, Response } from "express";
-import Chance from 'chance';
-
-const chance = new Chance();
+import { CategoryModel } from '../../models';
 
 export const getAllCategories = async (req: Request, res: Response) => {
-	const fakeCategory = () => ({
-			_id: chance.guid(),
-			key: chance.string()
-		})
-
-	res.json([fakeCategory(), fakeCategory(), fakeCategory()])
-}
+	const categories = await CategoryModel.find().exec();
+	return res.json(categories);
+};
