@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { IQuestion } from "schemas/question.schema";
-import { QuestionSchema } from "../schemas";
+import { QuestionSchema, IQuestion } from "../schemas";
 
 export const QuestionModel = mongoose.model<IQuestion>("question", QuestionSchema);

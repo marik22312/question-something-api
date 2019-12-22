@@ -1,4 +1,4 @@
-import Express, { Express as ExpressInstance, Router, RequestHandler } from 'express';
+import Express, { Express as ExpressInstance, Router, RequestHandler, Handler } from 'express';
 import { Server as HttpServer } from 'http';
 
 export class Server {
@@ -28,6 +28,11 @@ export class Server {
 
 	public withRouter(path: string, router: Router): Server {
 		this.server.use(path, router);
+		return this;
+	}
+
+	public use(path: string, handler: Handler): Server {
+		this.server.use(path, handler);
 		return this;
 	}
 

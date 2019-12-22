@@ -6,7 +6,7 @@ import { CategoriesRoutes } from "./categories";
 const router = Router();
 
 router
-.use("/questions", QuestionsRoutes)
+	.use("/questions", QuestionsRoutes)
 	.use("/difficulties", DifficultiesRoutes)
 	.use("/categories", CategoriesRoutes);
 
