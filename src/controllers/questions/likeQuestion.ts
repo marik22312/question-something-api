@@ -1,4 +1,4 @@
-import { Request, Response} from "express";
+import { Request, Response } from "express";
 import { QuestionModel, LikesModel } from '../../models';
 import * as Joi from '@hapi/joi';
 
@@ -33,8 +33,10 @@ export const likeQuestion = async (req: Request, res: Response) => {
 		}
 
 	const isLikedAlready = await LikesModel.findOne({
-		liked_by: body.device_id,
-		question_id: question._id,
+		$and: [
+			{liked_by: body.device_id},
+			{question_id: question._id},
+		],
 	});
 
 	if (isLikedAlready) {
@@ -45,6 +47,12 @@ export const likeQuestion = async (req: Request, res: Response) => {
 		question_id: question._id,
 		liked_by: body.device_id,
 	});
+
+	QuestionModel.findByIdAndUpdate(question._id, {
+		$inc: {
+			no_of_likes: 1,
+		},
+	}).exec();
 
 	return res.sendStatus(201);
 };
