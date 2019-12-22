@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { QuestionModel, LikesModel } from '../../models';
+import { QuestionModel, DislikeModel } from '../../models';
 import * as Joi from '@hapi/joi';
 
 interface IHandlerBody {
 	device_id: string;
 }
 
-export const likeQuestion = async (req: Request, res: Response) => {
+export const dislikeQuestion = async (req: Request, res: Response) => {
 	const body = req.body as IHandlerBody;
 
 	const questionId: string = req.params.questionId;
@@ -32,25 +32,25 @@ export const likeQuestion = async (req: Request, res: Response) => {
 				.sendStatus(400);
 		}
 
-	const isLikedAlready = await LikesModel.findOne({
+	const isDislikedAlready = await DislikeModel.findOne({
 		$and: [
-			{liked_by: body.device_id},
+			{disliked_by: body.device_id},
 			{question_id: question._id},
 		],
 	});
 
-	if (isLikedAlready) {
+	if (isDislikedAlready) {
 		return res.sendStatus(200);
 	}
 
-	const like = await LikesModel.create({
+	const dislike = await DislikeModel.create({
 		question_id: question._id,
-		liked_by: body.device_id,
+		disliked_by: body.device_id,
 	});
 
 	QuestionModel.findByIdAndUpdate(question._id, {
 		$inc: {
-			no_of_likes: 1,
+			no_of_dislikes: 1,
 		},
 	}).exec();
 
