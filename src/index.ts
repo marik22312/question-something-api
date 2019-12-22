@@ -1,7 +1,4 @@
 import "./env";
-// require('appmetrics-dash').attach({
-// 	url: '/api/dashboard',
-// });
 
 import { Server } from "./server";
 import { SERVER_PORT } from "./config";
