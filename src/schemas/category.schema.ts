@@ -11,4 +11,9 @@ export const CategorySchema: Schema<ICategory> = new Schema({
 		index: true,
 		required: true,
 	},
+	difficulties: {
+		type: Schema.Types.ObjectId,
+		index: true,
+		ref: 'difficulty',
+	},
 });
