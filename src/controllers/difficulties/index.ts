@@ -1,1 +1,1 @@
-export { getAllDifficulties } from './getAllDifficulties'
+export { getAllDifficulties } from './getAllDifficulties';
