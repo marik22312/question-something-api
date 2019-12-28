@@ -13,17 +13,19 @@ export interface Filter {
 
 export class QuestionsService {
 
+	public static readonly limit: number = 20;
+
 	private readonly model: Model<IQuestion>;
 
 	constructor() {
 		this.model = QuestionModel;
 	}
 
-	public getAll(): Promise<IQuestion[]> {
-		return this.model.find().exec();
+	public getAll(cursor: number = 0): Promise<IQuestion[]> {
+		return this.model.find().skip(cursor).limit(QuestionsService.limit).exec();
 	}
 
-	public getAllByFilter(filter: Filter): Promise<IQuestion[]> {
+	public getAllByFilter(filter: Filter, cursor: number = 0): Promise<IQuestion[]> {
 		let query = {};
 		const conditions: object[] = [];
 
@@ -49,6 +51,6 @@ export class QuestionsService {
 			};
 		}
 
-		return this.model.find(query).exec();
+		return this.model.find(query).skip(cursor).limit(QuestionsService.limit).exec();
 	}
 }
