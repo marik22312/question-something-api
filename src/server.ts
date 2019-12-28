@@ -13,12 +13,12 @@ export class Server {
 		this.httpServer = null;
 	}
 
-	public listen(): Server {
+	public listen(): HttpServer {
 		this.httpServer = this.server.listen(this.assignedPort, () => {
 			// tslint:disable-next-line: no-console
 			console.log(`Server is listening on port ${this.assignedPort}`);
 		});
-		return this;
+		return this.httpServer;
 	}
 
 	public setPort(port: number): Server {
