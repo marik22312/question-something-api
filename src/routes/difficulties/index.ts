@@ -9,7 +9,7 @@ router
 	.get('/', async (req, res) => {
 		const difficulties = await difficultiesService.getAll();
 
-		return res.json(difficulties);
+		return res.json({difficulties});
 	});
 
 export const DifficultiesRoutes = router;
