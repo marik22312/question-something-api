@@ -15,6 +15,6 @@ export class CategoriesService {
 	}
 
 	public getAll(): Promise<ICategory[]> {
-		return this.model.find().exec();
+		return this.model.find().populate('difficulties').exec();
 	}
 }
