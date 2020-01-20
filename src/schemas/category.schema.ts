@@ -12,7 +12,7 @@ export const CategorySchema: Schema<ICategory> = new Schema({
 		required: true,
 	},
 	difficulties: {
-		type: Schema.Types.ObjectId,
+		type: [Schema.Types.ObjectId],
 		index: true,
 		ref: 'difficulty',
 	},
