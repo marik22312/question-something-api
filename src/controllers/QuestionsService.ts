@@ -30,7 +30,7 @@ export class QuestionsService {
 
 	public getAllByFilter(
 		filter: Filter,
-		cursor: number = 0
+		cursor: number = 0,
 	): Promise<IQuestion[]> {
 		let query = {};
 		const conditions: object[] = [];
@@ -38,22 +38,22 @@ export class QuestionsService {
 		if (filter.categories) {
 			conditions.push({
 				categories: {
-					$in: filter.categories
-				}
+					$in: filter.categories,
+				},
 			});
 		}
 		if (filter.difficulties) {
 			conditions.push({
 				difficulties: {
-					$in: filter.difficulties
-				}
+					$in: filter.difficulties,
+				},
 			});
 		}
 
 		if (conditions.length !== 0) {
 			query = {
 				...query,
-				$and: conditions
+				$and: conditions,
 			};
 		}
 
