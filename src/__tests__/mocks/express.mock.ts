@@ -1,3 +1,5 @@
+import jest from 'jest-mock';
+
 export const Request = () => {
 	return {
 		sendStatus: jest.fn(),
