@@ -36,14 +36,14 @@
     "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.3"
-  },
-  "dependencies": {
-    "@hapi/joi": "^15.0.3",
-    "@types/chance": "^1.0.7",
+	"typescript": "^3.7.3",
+	"@types/chance": "^1.0.7",
     "@types/passport": "^1.0.2",
     "@types/passport-jwt": "^3.0.3",
     "@types/swagger-ui-dist": "^3.0.5",
+  },
+  "dependencies": {
+    "@hapi/joi": "^15.0.3",
     "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "chance": "^1.1.4",
