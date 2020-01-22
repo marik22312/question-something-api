@@ -11,9 +11,13 @@ export const CategorySchema: Schema<ICategory> = new Schema({
 		index: true,
 		required: true,
 	},
-	difficulties: {
-		type: [Schema.Types.ObjectId],
+	difficulties: [{
+		type: Schema.Types.ObjectId,
 		index: true,
 		ref: 'difficulty',
+	}],
+	icon: {
+		type: Schema.Types.String,
+		required: true,
 	},
 });
