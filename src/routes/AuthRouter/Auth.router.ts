@@ -27,7 +27,7 @@ const strategy = new JWTStrategy(strategyOpts, (payload, done) => {
 const authenticator = new Authenticator({strategy});
 
 router
-	.get('/authenticate', authenticator.authenticate(), async (req: Request, res: Response) => {
+	.get('/authenticate', async (req: Request, res: Response) => {
 		const reqBody = req.body;
 
 		try {
