@@ -20,7 +20,6 @@ export class Authenticator {
 	}
 
 	private getJWTStrategy(): JWTStrategy {
-		const strategy = JWTStrategy;
 		const ExtractJWT = ExtractJwt;
 
 		const strategyOpts: StrategyOptions = {

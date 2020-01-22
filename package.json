@@ -40,7 +40,7 @@
 	"@types/chance": "^1.0.7",
     "@types/passport": "^1.0.2",
     "@types/passport-jwt": "^3.0.3",
-    "@types/swagger-ui-dist": "^3.0.5",
+    "@types/swagger-ui-dist": "^3.0.5"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
