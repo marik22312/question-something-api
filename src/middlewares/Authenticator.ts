@@ -1,25 +1,15 @@
-import { IdentityService, AuthUserObj } from '../services/identity.service';
-import { Request, Response, NextFunction } from 'express';
+import passport from "passport";
+import { Strategy } from "passport-jwt";
 
 export class Authenticator {
-	private identityService: IdentityService;
-	constructor(identityService) {
-		this.identityService = identityService;
+	private strategy: Strategy;
 
-		this.authenticateToken = this.authenticateToken.bind(this);
+	constructor({ strategy }) {
+		this.strategy = strategy;
+		passport.use(this.strategy);
 	}
 
-	public authenticateToken(req: Request, res: Response, next: NextFunction) {
-		const token = req.headers.authorization;
-
-		if (!token) {
-			return res.sendStatus(401);
-		}
-		const user = this.identityService.verifyToken(token);
-		if (!user) {
-				return res.sendStatus(401);
-			}
-		req.user = { ...user };
-		next();
+	public authenticate() {
+		return passport.authenticate("jwt", { session: false });
 	}
 }

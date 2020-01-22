@@ -11,7 +11,7 @@ import { AuthRouter } from './routes/AuthRouter/Auth.router';
 const server = new Server()
 .setPort(SERVER_PORT)
 .use('/',  BodyParser.json())
-.use('/',  expressLogger)
+// .use('/',  expressLogger)
 .withRouter("/", AuthRouter)
 .withRouter("/api", questionsSomethingApiRoutes)
 .listen();
