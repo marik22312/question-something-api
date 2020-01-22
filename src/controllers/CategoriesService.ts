@@ -18,7 +18,6 @@ export class CategoriesService {
 
 		category.difficulties.forEach((difficulty) => {
 			if (!MongooseTypes.ObjectId.isValid(difficulty)) {
-				console.log('invalid!', difficulty);
 				throw new Error(`difficulty ${difficulty} is not a valid ObjectID!`);
 			}
 		});
