@@ -3,6 +3,7 @@ declare namespace NodeJS {
 	  PORT: string;
 	  MONGODB_URI: string;
 	  LOGZIO_TOKEN: string;
+	  SECRET_AUTH_TOKEN: string;
 	}
   }
 

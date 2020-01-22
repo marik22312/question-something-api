@@ -21,11 +21,13 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.4",
     "@types/express": "^4.17.2",
     "@types/hapi__joi": "^15.0.1",
     "@types/helmet": "^0.0.43",
     "@types/jest": "^24.0.24",
+    "@types/jsonwebtoken": "^8.3.6",
     "@types/mongoose": "^5.5.34",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
@@ -34,20 +36,26 @@
     "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.3"
+	"typescript": "^3.7.3",
+	"@types/chance": "^1.0.7",
+    "@types/passport": "^1.0.2",
+    "@types/passport-jwt": "^3.0.3",
+    "@types/swagger-ui-dist": "^3.0.5"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
-    "@types/chance": "^1.0.7",
-    "@types/swagger-ui-dist": "^3.0.5",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "chance": "^1.1.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
     "logzio-nodejs": "^1.0.7",
     "mongoose": "^5.8.1",
     "nodemon": "^2.0.2",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "prettier": "^1.19.1",
     "swagger-ui-dist": "^3.24.3"
   }
