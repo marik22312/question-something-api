@@ -12,7 +12,7 @@ const identityService = new IdentityService({
 });
 
 router
-	.get('/authenticate', async (req: Request, res: Response) => {
+	.post('/authenticate', async (req: Request, res: Response) => {
 		const reqBody = req.body;
 
 		try {
