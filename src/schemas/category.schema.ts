@@ -2,6 +2,8 @@ import { Document, Schema } from "mongoose";
 
 export interface ICategory extends Document {
 	key: string;
+	difficulties: string[];
+	icon: string;
 }
 
 export const CategorySchema: Schema<ICategory> = new Schema({
