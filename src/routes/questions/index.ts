@@ -5,12 +5,15 @@ import {
 	dislikeQuestion,
 } from "../../controllers/questions";
 import { QuestionsService, Filter } from "../../controllers/QuestionsService";
+import { Authenticator } from '../../middlewares/Authenticator';
+import { IQuestion } from '../../schemas';
 
 const router = Router();
+const authenticator = new Authenticator();
+const questionsService = new QuestionsService();
 
 router
 	.get("/", async (req, res) => {
-		const questionsService = new QuestionsService();
 
 		let cursor = req.query.cursor || "0";
 		cursor = parseInt(cursor, 10);
@@ -28,6 +31,16 @@ router
 		const questions = await questionsService.getAll(cursor);
 
 		res.json({ questions, nextCursor: QuestionsService.limit + cursor });
+	})
+	.post("/", authenticator.authenticate(), async (req: Request, res: Response) => {
+		try {
+			const Question = req.body as IQuestion;
+			QuestionsService.validateQuestionDto(Question);
+			const newQuestion = await questionsService.create(Question);
+			res.status(201).json(newQuestion);
+		} catch (err) {
+			res.status(500).send(err);
+		}
 	})
 	.post("/:questionId/likes", likeQuestion)
 	.post("/:questionId/dislikes", dislikeQuestion);
