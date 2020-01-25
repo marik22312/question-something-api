@@ -1,6 +1,7 @@
-import { Model } from "mongoose";
+import { Model, Types as MongooseTypes } from "mongoose";
 import { IQuestion } from "../schemas";
 import { QuestionModel } from "../models";
+import * as Joi from "@hapi/joi";
 
 export interface IQuestionsServiceConstructor {
 	model: Model<IQuestion>;
@@ -13,6 +14,41 @@ export interface Filter {
 
 export class QuestionsService {
 	public static readonly limit: number = 20;
+
+	public static validateQuestionDto(question: IQuestion) {
+		const validation = Joi.validate(question, this.questionValidationSchema);
+
+		if (validation.error) {
+			throw validation.error.message;
+		}
+
+		question.difficulties.forEach((difficulty) => {
+			if (!MongooseTypes.ObjectId.isValid(difficulty)) {
+				throw new Error(`difficulty ${difficulty} is not a valid ObjectID!`);
+			}
+		});
+		question.categories.forEach((category) => {
+			if (!MongooseTypes.ObjectId.isValid(category)) {
+				throw new Error(`category ${category} is not a valid ObjectID!`);
+			}
+		});
+		return true;
+	}
+
+	private static readonly questionValidationSchema = Joi.object().keys({
+		question: Joi.string()
+			.required()
+			.min(3)
+			.max(256),
+		difficulties: Joi.array()
+			.items(Joi.string())
+			.min(1)
+			.required(),
+		categories: Joi.array()
+			.items(Joi.string())
+			.min(1)
+			.required(),
+	});
 
 	private readonly model: Model<IQuestion>;
 
@@ -62,5 +98,9 @@ export class QuestionsService {
 			.skip(cursor)
 			.limit(QuestionsService.limit)
 			.exec();
+	}
+
+	public create(question: IQuestion): Promise<IQuestion> {
+		return this.model.create(question);
 	}
 }

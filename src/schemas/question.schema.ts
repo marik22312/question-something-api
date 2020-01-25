@@ -1,11 +1,11 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, Types as MongooseTypes } from 'mongoose';
 
 export interface IQuestion extends Document {
 	question: string;
 	no_of_likes: number;
 	no_of_dislikes: number;
-	categories: Schema.Types.ObjectId;
-	difficulties: Schema.Types.ObjectId;
+	categories: MongooseTypes.ObjectId[];
+	difficulties: MongooseTypes.ObjectId[];
 }
 
 export const QuestionSchema: Schema = new Schema({
