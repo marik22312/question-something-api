@@ -1,7 +1,7 @@
-import { Router, Request, Response } from 'express';
-import { IdentityService } from '../../services/identity.service';
-import { SECRET_AUTH_TOKEN } from '../../config';
-import { UsersService } from '../../controllers/UsersService';
+import { Router, Request, Response } from "express";
+import { IdentityService } from "../../services/identity.service";
+import { SECRET_AUTH_TOKEN } from "../../config";
+import { UsersService } from "../../controllers/UsersService";
 
 const router = Router();
 
@@ -12,11 +12,24 @@ const identityService = new IdentityService({
 });
 
 router
-	.post('/authenticate', async (req: Request, res: Response) => {
+	.post("/authenticate", async (req: Request, res: Response) => {
 		const reqBody = req.body;
 
 		try {
-			const response = await identityService.authenticateUserByEmailAndPassword(reqBody.email, reqBody.password);
+			const response = await identityService.authenticateUserByEmailAndPassword(
+				reqBody.email,
+				reqBody.password,
+			);
+			return res.json(response);
+		} catch (error) {
+			res.status(500).send(error.message);
+		}
+	})
+	.post("/google", async (req: Request, res: Response) => {
+		const reqBody = req.body;
+
+		try {
+			const response = await identityService.authenticateByGoogle(reqBody.id_token);
 			return res.json(response);
 		} catch (error) {
 			res.status(500).send(error.message);
