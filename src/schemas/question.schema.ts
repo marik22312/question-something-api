@@ -23,14 +23,14 @@ export const QuestionSchema: Schema = new Schema({
 		type: Schema.Types.Number,
 		default: 0,
 	},
-	categories: {
-		type: [Schema.Types.ObjectId],
+	categories: [{
+		type: Schema.Types.ObjectId,
 		ref: 'category',
 		default: [],
-	},
-	difficulties: {
-		type: [Schema.Types.ObjectId],
+	}],
+	difficulties: [{
+		type: Schema.Types.ObjectId,
 		ref: 'difficulty',
 		default: [],
-	},
+	}],
 });

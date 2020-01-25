@@ -1,7 +1,10 @@
 import { IUsers } from "../schemas";
 import { sign, verify } from "jsonwebtoken";
 import { UsersService } from "../controllers/UsersService";
+
 import bcrypt from "bcrypt";
+import { OAuth2Client } from "google-auth-library";
+import { GOOGLE_AUTH_AUD_KEY, GOOGLE_AUTH_API_KEY } from '../config';
 
 export interface IdentityServiceConstructorProps {
 	secret: string;
@@ -26,10 +29,12 @@ export class IdentityService {
 
 	private readonly secret: string;
 	private readonly usersService: UsersService;
+	private readonly oauthClient: OAuth2Client;
 
 	constructor(constructorObj: IdentityServiceConstructorProps) {
 		this.secret = constructorObj.secret;
 		this.usersService = constructorObj.usersService;
+		this.oauthClient = new OAuth2Client(GOOGLE_AUTH_API_KEY);
 	}
 
 	public signAuthToken(user: AuthUserObj): string {
@@ -56,6 +61,38 @@ export class IdentityService {
 		}
 		const isMatch = await this.compareHash(password, user.password);
 		if (!isMatch) {
+			throw Error("Wrong email or password");
+		}
+
+		const userAuthObj: AuthUserObj = {
+			_id: user._id,
+			email: user.email,
+		};
+		const token = this.signAuthToken(userAuthObj);
+		const response: AuthenticationResponse = {
+			user: userAuthObj,
+			token,
+		};
+
+		return response;
+	}
+
+	public async authenticateByGoogle(
+		idToken: string,
+	): Promise<AuthenticationResponse> {
+		const ticket = await this.oauthClient.verifyIdToken({
+			idToken,
+			audience: GOOGLE_AUTH_AUD_KEY,
+		});
+		const payload = ticket.getPayload();
+
+		if (!payload || !payload.email_verified || !payload.email) {
+			throw new Error('Email Is Not verified!');
+		}
+
+		const email = payload.email;
+		const user = await this.usersService.getUserByEmail(email);
+		if (!user) {
 			throw Error("Wrong email or password");
 		}
 

@@ -59,6 +59,8 @@ export class QuestionsService {
 	public getAll(cursor: number = 0): Promise<IQuestion[]> {
 		return this.model
 			.find()
+			.populate('categories', '_id key')
+			.populate('difficulties', '_id key')
 			.skip(cursor)
 			.limit(QuestionsService.limit)
 			.exec();
