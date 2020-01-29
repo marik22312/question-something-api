@@ -69,6 +69,7 @@ export class QuestionsService {
 	public getAllByFilter(
 		filter: Filter,
 		cursor: number = 0,
+		deviceId: string = '',
 	): Promise<IQuestion[]> {
 		let query = {};
 		const conditions: object[] = [];
@@ -76,14 +77,14 @@ export class QuestionsService {
 		if (filter.categories) {
 			conditions.push({
 				categories: {
-					$in: filter.categories,
+					$in: filter.categories.map((categoryId: string) => MongooseTypes.ObjectId(categoryId)),
 				},
 			});
 		}
 		if (filter.difficulties) {
 			conditions.push({
 				difficulties: {
-					$in: filter.difficulties,
+					$in: filter.difficulties.map((difficultyId: string) => MongooseTypes.ObjectId(difficultyId)),
 				},
 			});
 		}
@@ -95,11 +96,106 @@ export class QuestionsService {
 			};
 		}
 
+		// return this.model
+		// 	.find(query)
+		// 	.skip(cursor)
+		// 	.limit(QuestionsService.limit)
+		// 	.exec();
+
 		return this.model
-			.find(query)
-			.skip(cursor)
-			.limit(QuestionsService.limit)
-			.exec();
+				.aggregate([{
+					$match: query,
+				}, {
+					$sample: {
+						size: QuestionsService.limit,
+					},
+				}, {
+					$lookup: {
+						from: 'categories',
+						localField: 'categories',
+						foreignField: '_id',
+						as: 'category',
+					},
+				 }, {
+					$lookup: {
+						from: 'difficulties',
+						localField: 'difficulties',
+						foreignField: '_id',
+						as: 'difficulty',
+					},
+				 }, {
+					$lookup: {
+						from: 'likes',
+						let: {questionId: '$_id'},
+						pipeline: [{
+							$match: {
+								$expr: {
+									 $and: [{
+										 $eq: [
+											 "$question_id",
+											 "$$questionId",
+											],
+										}, {
+											$eq: [
+												"$liked_by",
+												deviceId,
+											],
+										}],
+							   		},
+								},
+						}],
+						as: 'likes',
+					},
+				 }, {
+					$lookup: {
+						from: 'dislikes',
+						let: {questionId: '$_id'},
+						pipeline: [{
+							$match: {
+								$expr: {
+									 $and: [{
+										 $eq: [
+											 "$question_id",
+											 "$$questionId",
+											],
+										}, {
+											$eq: [
+												"$disliked_by",
+												deviceId,
+											],
+										}],
+							   		},
+								},
+						}],
+						as: 'dislikes',
+					},
+				 }, {
+					 $project: {
+						 _id: true,
+						 question: true,
+						 no_of_likes: true,
+						 no_of_dislikes: true,
+						 likes: true,
+						 is_liked: {
+							 $cond: {
+								 if: {
+									 $size: '$likes',
+								 },
+								 then: true,
+								 else: false,
+							 },
+						 },
+						 is_disliked: {
+							 $cond: {
+								 if: {
+									 $size: '$dislikes',
+								 },
+								 then: true,
+								 else: false,
+							 },
+						 },
+					 },
+				 }]).exec();
 	}
 
 	public create(question: IQuestion): Promise<IQuestion> {
