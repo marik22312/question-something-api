@@ -17,12 +17,14 @@ router
 
 		let cursor = req.query.cursor || "0";
 		cursor = parseInt(cursor, 10);
+		const deviceId: string = req.headers['x-icbrkr-device'] as string || '';
 
 		if (req.query.filter) {
 			const filter = JSON.parse(req.query.filter) as Filter;
 			const filteredQuestions = await questionsService.getAllByFilter(
 				filter,
 				cursor,
+				deviceId,
 			);
 
 			return res.json({questions: filteredQuestions});
