@@ -44,6 +44,16 @@ router
 			res.status(500).send(err);
 		}
 	})
+	.post("/bulk", authenticator.authenticate(), async (req: Request, res: Response) => {
+		try {
+			const body = req.body;
+			const questions = body.questions as IQuestion[];
+			const newQuestion = await questionsService.create(questions);
+			res.status(201).json(newQuestion);
+		} catch (err) {
+			res.status(500).send(err);
+		}
+	})
 	.post("/:questionId/likes", likeQuestion)
 	.post("/:questionId/dislikes", dislikeQuestion);
 

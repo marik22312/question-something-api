@@ -198,7 +198,7 @@ export class QuestionsService {
 				 }]).exec();
 	}
 
-	public create(question: IQuestion): Promise<IQuestion> {
+	public create(question: IQuestion | IQuestion[]): Promise<IQuestion | IQuestion[]> {
 		return this.model.create(question);
 	}
 }
