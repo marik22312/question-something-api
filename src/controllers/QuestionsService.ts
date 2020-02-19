@@ -209,4 +209,8 @@ export class QuestionsService {
 	public create(question: IQuestion | IQuestion[]): Promise<IQuestion | IQuestion[]> {
 		return this.model.create(question);
 	}
+
+	public update(id: string, question: IQuestion) {
+		return this.model.findByIdAndUpdate(id, question);
+	}
 }

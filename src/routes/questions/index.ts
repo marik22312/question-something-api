@@ -44,6 +44,29 @@ router
 
 			return res.json({question});
 	})
+	.put("/:questionId", authenticator.authenticate(), async (req, res) => {
+			const questionId = req.params.questionId;
+			const reqBody = req.body;
+			if (!questionId) {
+				return res.sendStatus(400);
+			}
+
+			if (!reqBody || !reqBody.categories || !reqBody.categories.length) {
+				return res.status(400).send('Must provide categories!');
+			}
+			if (!reqBody || !reqBody.difficulties || !reqBody.difficulties.length) {
+				return res.status(400).send('Must provide difficulties!');
+			}
+
+			try {
+				await questionsService.update(questionId, reqBody);
+				const question = await questionsService.getById(questionId);
+				return res.json({question});
+			} catch (error) {
+				return res.status(500).send(error);
+			}
+
+	})
 	.post("/", authenticator.authenticate(), async (req: Request, res: Response) => {
 		try {
 			const Question = req.body as IQuestion;
