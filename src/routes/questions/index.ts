@@ -59,7 +59,7 @@ router
 			}
 
 			try {
-				await questionsService.update(reqBody);
+				await questionsService.update(questionId, reqBody);
 				const question = await questionsService.getById(questionId);
 				return res.json({question});
 			} catch (error) {

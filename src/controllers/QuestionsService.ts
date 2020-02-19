@@ -210,7 +210,7 @@ export class QuestionsService {
 		return this.model.create(question);
 	}
 
-	public update(question: IQuestion) {
-		return this.model.findByIdAndUpdate(question._id, question);
+	public update(id: string, question: IQuestion) {
+		return this.model.findByIdAndUpdate(id, question);
 	}
 }
