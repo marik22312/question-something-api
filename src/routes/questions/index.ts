@@ -34,6 +34,16 @@ router
 
 		res.json({ questions, nextCursor: QuestionsService.limit + cursor });
 	})
+	.get("/:questionId", async (req, res) => {
+			const questionId = req.params.questionId;
+			if (!questionId) {
+				return res.sendStatus(400);
+			}
+
+			const question = await questionsService.getById(questionId);
+
+			return res.json({question});
+	})
 	.post("/", authenticator.authenticate(), async (req: Request, res: Response) => {
 		try {
 			const Question = req.body as IQuestion;

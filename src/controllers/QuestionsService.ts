@@ -56,6 +56,14 @@ export class QuestionsService {
 		this.model = QuestionModel;
 	}
 
+	public getById(id: string) {
+		return this.model
+			.findById(id)
+			.populate('categories', '_id key')
+			.populate('difficulties', '_id key')
+			.exec();
+	}
+
 	public getAll(cursor: number = 0): Promise<IQuestion[]> {
 		return this.model
 			.find()
