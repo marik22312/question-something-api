@@ -1,11 +1,17 @@
 import { Schema, Document, Types as MongooseTypes } from 'mongoose';
 
+export enum QuestionStatus {
+	NEW = 'NEW',
+	REVIEWED = 'REVIEWED',
+	PUBLISHED = 'PUBLISHED',
+}
 export interface IQuestion extends Document {
 	question: string;
 	no_of_likes: number;
 	no_of_dislikes: number;
 	categories: MongooseTypes.ObjectId[];
 	difficulties: MongooseTypes.ObjectId[];
+	status?: QuestionStatus;
 }
 
 export const QuestionSchema: Schema = new Schema({
@@ -33,4 +39,8 @@ export const QuestionSchema: Schema = new Schema({
 		ref: 'difficulty',
 		default: [],
 	}],
+	status: {
+		type: Schema.Types.String,
+		default: QuestionStatus.NEW,
+	},
 });

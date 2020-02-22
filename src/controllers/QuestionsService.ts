@@ -1,5 +1,5 @@
-import { Model, Types as MongooseTypes } from "mongoose";
-import { IQuestion } from "../schemas";
+import { Model, Types as MongooseTypes, Mongoose } from "mongoose";
+import { IQuestion, QuestionStatus } from "../schemas";
 import { QuestionModel } from "../models";
 import * as Joi from "@hapi/joi";
 
@@ -79,7 +79,9 @@ export class QuestionsService {
 		cursor: number = 0,
 		deviceId: string = '',
 	): Promise<IQuestion[]> {
-		let query = {};
+		let query: any = {
+			status: QuestionStatus.PUBLISHED,
+		};
 		const conditions: object[] = [];
 
 		if (filter.categories) {
@@ -211,6 +213,21 @@ export class QuestionsService {
 	}
 
 	public update(id: string, question: IQuestion) {
-		return this.model.findByIdAndUpdate(id, question);
+		const reviewedQuestion = {
+			...question,
+			status: QuestionStatus.REVIEWED,
+		};
+		return this.model.findByIdAndUpdate(id, reviewedQuestion, {
+			new: true,
+		});
+	}
+
+	public publish(id: string): any {
+		const statusUpdate = {
+			status: QuestionStatus.PUBLISHED,
+		};
+		return this.model.findByIdAndUpdate(id, statusUpdate, {
+			new: true,
+		});
 	}
 }
