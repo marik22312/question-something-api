@@ -230,4 +230,15 @@ export class QuestionsService {
 			new: true,
 		});
 	}
+
+	public findByText(text: string): Promise<IQuestion[]> {
+		return this.model.find({
+			$text: {
+				$search: text,
+				$language: 'english',
+				$caseSensitive: false,
+				$diacriticSensitive: false,
+			},
+		}).exec();
+	}
 }
