@@ -14,7 +14,7 @@ export interface IQuestion extends Document {
 	status?: QuestionStatus;
 }
 
-export const QuestionSchema: Schema = new Schema({
+const QuestionSchema: Schema = new Schema({
 	question: {
 		type: Schema.Types.String,
 		unique: true,
@@ -44,3 +44,9 @@ export const QuestionSchema: Schema = new Schema({
 		default: QuestionStatus.NEW,
 	},
 });
+
+QuestionSchema.index({
+	question: 'text',
+});
+
+export { QuestionSchema };

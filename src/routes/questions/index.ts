@@ -28,6 +28,12 @@ router
 
 			return res.json({ questions: filteredQuestions });
 		}
+		if (req.query.text) {
+			const text = req.query.text as string;
+			const filteredQuestions = await questionsService.findByText(text);
+
+			return res.json({ questions: filteredQuestions, total: filteredQuestions.length });
+		}
 
 		const questions = await questionsService.getAll(cursor);
 
